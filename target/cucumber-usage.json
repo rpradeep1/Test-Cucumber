@@ -1,0 +1,56 @@
+[
+  {
+    "source": "^They should able to click on CPT ICD Link-Admin link under Adminstration tab$",
+    "steps": [
+      {
+        "name": "They should able to click on CPT ICD Link-Admin link under Adminstration tab",
+        "aggregatedDurations": {
+          "average": 1.437807948,
+          "median": 1.437807948
+        },
+        "durations": [
+          {
+            "duration": 1.437807948,
+            "location": "F3779 - Establish Operational Audit Functionality.feature:8"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "source": "^an IU user have role of Admin Ops$",
+    "steps": [
+      {
+        "name": "an IU user have role of Admin Ops",
+        "aggregatedDurations": {
+          "average": 8.339914431,
+          "median": 8.339914431
+        },
+        "durations": [
+          {
+            "duration": 8.339914431,
+            "location": "F3779 - Establish Operational Audit Functionality.feature:6"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "source": "^User logs with \"([^\"]*)\" as CPT ICD RA into JBPM Application$",
+    "steps": [
+      {
+        "name": "User logs with \"iht_ittest05\" as CPT ICD RA into JBPM Application",
+        "aggregatedDurations": {
+          "average": 3.176413762,
+          "median": 3.176413762
+        },
+        "durations": [
+          {
+            "duration": 3.176413762,
+            "location": "F3779 - Establish Operational Audit Functionality.feature:7"
+          }
+        ]
+      }
+    ]
+  }
+]
