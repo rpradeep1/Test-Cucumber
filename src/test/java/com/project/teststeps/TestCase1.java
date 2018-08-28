@@ -1,5 +1,7 @@
 package com.project.teststeps;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
@@ -8,6 +10,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
+import com.project.utilities.DBUtils;
 import com.project.utilities.genericUtils;
 import com.project.utilities.objectRepository;
 import com.project.utilities.projectVariables;
@@ -22,6 +25,7 @@ public class TestCase1 {
 	projectVariables CPT_ICD_PROJ_VAR = new projectVariables();	
 	objectRepository CPT_ICD_PROJ_OR = new objectRepository();
 	genericUtils Generic = new genericUtils();
+	int AdminScreenDBTotalRecords_Count = 0 ;
 	
 	
 	@Given("^an IU user have role of Admin Ops$")
@@ -96,7 +100,12 @@ public class TestCase1 {
 	public void screen_will_be_opened_in_a_new_tab_with_title_CPTICD_Links_Admin() throws Throwable {
 		
 		System.out.println("Validate CPT ICD Admin link");
-		boolean sVal = driver.findElement(By.xpath("//h1[contains(text(), 'CPT ICD Link-Admin')]")).isDisplayed();
+		//WaitUntilPageLoad();
+		driver.manage().timeouts().implicitlyWait(30,TimeUnit.SECONDS);
+		List<String> browserTabs = null;
+		browserTabs = new ArrayList<String>(driver.getWindowHandles());
+		driver.switchTo().window(browserTabs.get(0));		
+		boolean sVal = driver.findElement(By.xpath("//a[contains(text(), 'Admin')]")).isDisplayed();
 		
 		if (sVal) {
 			System.out.println("CPT ICD Admin Home screen is displayed");
@@ -107,6 +116,24 @@ public class TestCase1 {
 
 	@When("^RA captures Admin screen data count by executing a Query$")
 	public void ra_captures_Admin_screen_data_count_by_executing_a_Query() throws Throwable {
+		
+		int AdminScreenDBCount_LCD=0;
+		int AdminScreenDBCount_Article=0;
+			
+	String  AdminScreenDBCountQuery_LCD = "SELECT COUNT(*) FROM (select * from LCD.LCD_REVIEW_TASK where DELTA_creation_date in( SELECT DELTA_creation_date FROM LCD.CPT_ICD_LINKS_ETL_CONTROL where load_status= 'LOAD_COMPLETED'))";
+	AdminScreenDBCount_LCD =    Integer.parseInt(DBUtils.executeSQLQuery(AdminScreenDBCountQuery_LCD));
+	System.out.println("DB QueryReusult-->  :" + AdminScreenDBCount_LCD);
+	System.out.println("DB Query executed successfully");   
+			  
+		
+	String  AdminScreenDBCountQuery_Article = "SELECT COUNT(*) FROM (select * from LCD.ART_REVIEW_TASK where DELTA_creation_date in( SELECT DELTA_creation_date FROM LCD.CPT_ICD_LINKS_ETL_CONTROL where load_status= 'LOAD_COMPLETED'))";
+	AdminScreenDBCount_Article =    Integer.parseInt(DBUtils.executeSQLQuery(AdminScreenDBCountQuery_Article));
+	System.out.println("DB QueryReusult-->  :" + AdminScreenDBCount_Article);
+	System.out.println("DB Query executed successfully");   
+		   
+	AdminScreenDBTotalRecords_Count = AdminScreenDBCount_LCD + AdminScreenDBCount_Article;
+	
+	System.out.println("CPT ICD Link Admin screen record Count --" + AdminScreenDBTotalRecords_Count);
 
 	}
 
@@ -119,6 +146,34 @@ public class TestCase1 {
 	public void logout_Application() throws Throwable {
 
 	}
+	
+	
+    public void WaitUntilPageLoad() throws Exception{
+    	
+    	boolean bPageLoaded= false;
+    	int iCount;
+    	int iLoopCount=0;
+    	
+    	Thread.sleep(CPT_ICD_PROJ_VAR.MIN_TIME_OUT);
+    	
+    	do{
+    		iCount = driver.findElements(By.xpath(CPT_ICD_PROJ_OR.sPageLoading)).size();
+    		if(iCount >= 1)
+    		{
+    			bPageLoaded = true;
+    		}
+      else{
+    			Thread.sleep(CPT_ICD_PROJ_VAR.MIN_TIME_OUT);
+    			iLoopCount= iLoopCount + 1;
+    		}
+    	}while((!bPageLoaded) && (iLoopCount<=1000));  //Wait for 3 minutes for page to load before exiting the Test 
+    	
+    	if (iLoopCount>1000)
+    	{		
+    		System.out.println("The expected Page is not yet loaded");
+    		throw new Exception("The expected Application Page is not yet loaded after 3 minutes");
+    	}
+    } 
 
 
 }
