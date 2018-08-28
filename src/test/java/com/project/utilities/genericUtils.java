@@ -12,7 +12,10 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.internal.WrapsDriver;
 
+
 public class genericUtils {
+	
+	
 	
 	
     public  void highlightElement(WebDriver driver, WebElement element) {
@@ -251,7 +254,7 @@ public class genericUtils {
      }
 	 
 	  
-	 
+
 	
 	
 }
