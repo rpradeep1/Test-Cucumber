@@ -48,7 +48,7 @@ public class projectVariables {
 	
 	public int MID_MIN_TIME_OUT = 3000;
 	
-	public int MIN_TIME_OUT = 500;
+	public int MIN_TIME_OUT = 100;
 	
 	public int EXTD_MAX_TIME_OUT = 400000;
 	
