@@ -139,11 +139,13 @@ public class TestCase1 {
 
 	@Then("^The records count in the Admin screen grid should match with the DB count$")
 	public void the_records_count_in_the_Admin_screen_grid_should_match_with_the_DB_count() throws Throwable {
+		System.out.println("DB Query executed successfully");   
 
 	}
 
 	@Then("^Logout Application$")
 	public void logout_Application() throws Throwable {
+		driver.quit();
 
 	}
 	

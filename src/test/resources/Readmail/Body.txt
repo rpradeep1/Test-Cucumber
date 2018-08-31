@@ -1,0 +1,2 @@
+Please follow this link to reset your password
+https://qaexternal.ihtech.com/ClaimsInquiryTool/common/SendToLogin.jsp?u_name=testcitchange&u_pass=W8e1%7C%26h.44DU%28_lz
